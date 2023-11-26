@@ -14,5 +14,7 @@ namespace TestTaskAPI.Models
 		public string? ThirdName { get; set; }
 		[Required]
 		public string? PhotoNumber { get; set; }
+		[Required]
+		public Event? Event { get; set; }
 	}
 }

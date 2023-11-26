@@ -12,5 +12,7 @@ namespace TestTaskAPI.Models
 		public string Name { get; set; }
 		[Required]
 		public float DurationInMinutes { get; set; }
+		[Required]
+		public Event? Event { get; set; }
 	}
 }

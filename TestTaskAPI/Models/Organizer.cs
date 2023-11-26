@@ -16,5 +16,7 @@ namespace TestTaskAPI.Models
 		public string? CompanyName { get; set; }
 		[Required]
 		public string? PhoneNumber { get; set; }
+		[Required]
+		public Event? Event { get; set; }
 	}
 }
