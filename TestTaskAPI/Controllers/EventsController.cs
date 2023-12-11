@@ -1,81 +1,55 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TestTaskAPI.Data;
 using TestTaskAPI.Dtos;
-using TestTaskAPI.Models;
+using TestTaskAPI.Services;
 
 namespace TestTaskAPI.Controllers
 {
 	[Authorize]
-	[Route("api/v1/[controller]")]
+	[Route("api/v1/events")]
 	[ApiController]
 	public class EventsController : ControllerBase
 	{
-		private readonly IRepo<Event> _eventRepo;
-		private readonly IMapper _mapper;
+		private readonly IEventService _eventService;
 
-		public EventsController(IRepo<Event> eventRepo, IMapper mapper)
+		public EventsController(IEventService eventService)
 		{
-			_eventRepo = eventRepo;
-			_mapper = mapper;
+			_eventService = eventService;
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<EventReadDto>>> GetAllEvents()
+		public async Task<Response<IEnumerable<EventReadDto>>> GetAllEvents()
 		{
-			var events = await _eventRepo.GetAllItems();
-			return Ok(_mapper.Map<IEnumerable<EventReadDto>>(events));
+			var events = await _eventService.GetAllEvents();
+			return events;
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<EventReadDto>> GetEventById(int id)
+		public async Task<Response<EventReadDto>> GetEventById(int id)
 		{
-			var eventModel = await _eventRepo.GetItemById(id);
-			if (eventModel != null)
-			{
-				return Ok(_mapper.Map<EventReadDto>(eventModel));
-			}
-			return NotFound();
+			var @event = await _eventService.GetEventById(id);
+			return @event;
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<EventReadDto>> CreateEvent(EventCreateDto eventCreateDto)
+		public async Task<ActionResult<Response<EventReadDto>>> CreateEvent(EventCreateDto eventCreateDto)
 		{
-			var eventModel = _mapper.Map<Event>(eventCreateDto);
-			await _eventRepo.CreateItem(eventModel);
-			await _eventRepo.SaveChanges();
-
-			return Ok(_mapper.Map<EventReadDto>(eventModel));
+			var eventReadDto = await _eventService.CreateEvent(eventCreateDto);
+			return eventReadDto;
 		}
 
 		[HttpPut("{id}")]
-		public async Task<ActionResult<EventReadDto>> UpdateEvent(int id, EventUpdateDto eventUpdateDto)
+		public async Task<ActionResult<Response<EventReadDto>>> UpdateEvent(int id, EventUpdateDto eventUpdateDto)
 		{
-			var eventModelFromRepo = _eventRepo.GetItemById(id).Result;
-			if (eventModelFromRepo == null)
-			{
-				return NotFound();
-			}
-
-			var organizerToRepo = _mapper.Map(eventUpdateDto, eventModelFromRepo);
-			await _eventRepo.SaveChanges();
-			return Ok(_mapper.Map<EventReadDto>(organizerToRepo));
+			var eventReadDto = await _eventService.UpdateEvent(id, eventUpdateDto);
+			return eventReadDto;
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<ActionResult<EventReadDto>> DeleteEvent(int id)
+		public async Task<ActionResult<Response<EventReadDto>>> DeleteEvent(int id)
 		{
-			var eventModelFromRepo = _eventRepo.GetItemById(id).Result;
-			if (eventModelFromRepo == null)
-			{
-				return NotFound();
-			}
-			_eventRepo.DeleteItem(eventModelFromRepo);
-			await _eventRepo.SaveChanges();
-			return Ok(_mapper.Map<EventReadDto>(eventModelFromRepo));
+			var eventReadDto = await _eventService.DeleteEvent(id);
+			return eventReadDto;
 		}
-
-
 	}
 }

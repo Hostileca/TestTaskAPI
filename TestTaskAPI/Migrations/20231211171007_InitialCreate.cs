@@ -181,7 +181,7 @@ namespace TestTaskAPI.Migrations
                     Number = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DurationInMinutes = table.Column<float>(type: "real", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: true)
+                    EventId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -190,7 +190,8 @@ namespace TestTaskAPI.Migrations
                         name: "FK_EventStages_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,7 +205,7 @@ namespace TestTaskAPI.Migrations
                     ThirdName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: true)
+                    EventId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,7 +214,8 @@ namespace TestTaskAPI.Migrations
                         name: "FK_Organizers_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,7 +228,7 @@ namespace TestTaskAPI.Migrations
                     SecondName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ThirdName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhotoNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: true)
+                    EventId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -235,7 +237,8 @@ namespace TestTaskAPI.Migrations
                         name: "FK_Speakers_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

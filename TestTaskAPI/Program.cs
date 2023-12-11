@@ -33,6 +33,7 @@ namespace TestTaskAPI
 			builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(sqlConnectionBuilder.ConnectionString));
 			builder.Services.AddScoped<IRepo<Event>, EventRepo>();
 			builder.Services.AddScoped<IAuthService, AuthService>();
+			builder.Services.AddScoped<IEventService, EventService>();
 			builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 			builder.Services.AddAuthentication(options => { 

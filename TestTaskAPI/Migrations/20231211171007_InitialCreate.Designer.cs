@@ -12,7 +12,7 @@ using TestTaskAPI.Data;
 namespace TestTaskAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231123213616_InitialCreate")]
+    [Migration("20231211171007_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -262,7 +262,7 @@ namespace TestTaskAPI.Migrations
                     b.Property<float>("DurationInMinutes")
                         .HasColumnType("real");
 
-                    b.Property<int?>("EventId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -291,7 +291,7 @@ namespace TestTaskAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EventId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -325,7 +325,7 @@ namespace TestTaskAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("EventId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -404,23 +404,35 @@ namespace TestTaskAPI.Migrations
 
             modelBuilder.Entity("TestTaskAPI.Models.EventStage", b =>
                 {
-                    b.HasOne("TestTaskAPI.Models.Event", null)
+                    b.HasOne("TestTaskAPI.Models.Event", "Event")
                         .WithMany("EventStages")
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("TestTaskAPI.Models.Organizer", b =>
                 {
-                    b.HasOne("TestTaskAPI.Models.Event", null)
+                    b.HasOne("TestTaskAPI.Models.Event", "Event")
                         .WithMany("Organizers")
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("TestTaskAPI.Models.Speaker", b =>
                 {
-                    b.HasOne("TestTaskAPI.Models.Event", null)
+                    b.HasOne("TestTaskAPI.Models.Event", "Event")
                         .WithMany("Speakers")
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("TestTaskAPI.Models.Event", b =>

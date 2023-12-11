@@ -4,7 +4,7 @@ using TestTaskAPI.Services;
 
 namespace CustomIdentityServer4.Controllers
 {
-	[Route("api/v1/[controller]")]
+	[Route("api/v1/users")]
 	[ApiController]
 	public class AccountController : ControllerBase
 	{
@@ -15,7 +15,7 @@ namespace CustomIdentityServer4.Controllers
 			_userService = userService;
 		}
 
-		[HttpPost("Register")]
+		[HttpPost("registration")]
 		public async Task<IActionResult> RegisterUser(UserRegisterDto userRegisterDto)
 		{
 			if(await _userService.RegisterUser(userRegisterDto))
@@ -25,7 +25,7 @@ namespace CustomIdentityServer4.Controllers
 			return BadRequest();
 		}
 
-		[HttpPost("Login")]
+		[HttpPost("authorization")]
 		public async Task<IActionResult> Login(UserRegisterDto userRegisterDto)
 		{
 			var result = await _userService.Login(userRegisterDto);
