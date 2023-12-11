@@ -16,25 +16,25 @@ namespace CustomIdentityServer4.Controllers
 		}
 
 		[HttpPost("registration")]
-		public async Task<IActionResult> RegisterUser(UserRegisterDto userRegisterDto)
+		public async Task<Response<bool>> RegisterUser(UserRegisterDto userRegisterDto)
 		{
 			if(await _userService.RegisterUser(userRegisterDto))
 			{
-				return Ok();
+				return new Response<bool>(true);
 			}
-			return BadRequest();
+			return new Response<bool>("User registration error");
 		}
 
 		[HttpPost("authorization")]
-		public async Task<IActionResult> Login(UserRegisterDto userRegisterDto)
+		public async Task<Response<string>> Login(UserRegisterDto userRegisterDto)
 		{
 			var result = await _userService.Login(userRegisterDto);
 			if (result)
 			{
 				var tokenString = _userService.GenerateToken(userRegisterDto);
-				return Ok(tokenString);
+				return new Response<string>(tokenString);
 			}
-			return BadRequest();
+			return new Response<string>("Wrong login or password");
 		}
 	}
 }
