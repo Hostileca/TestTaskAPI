@@ -38,17 +38,20 @@ namespace TestTaskAPI.Services
 			return tokenString;
 		}
 
-		public async Task<bool> Login(UserRegisterDto userLoginDto)
-		{
+		public async Task<string> Login(UserRegisterDto userLoginDto)
+		{		
 			var identityUser = await _userManager.FindByNameAsync(userLoginDto.UserName);
 			if (identityUser is null) {
-				return false;
+				return "user not found";
 			}
-
-			return await _userManager.CheckPasswordAsync(identityUser, userLoginDto.Password);
+			if(await _userManager.CheckPasswordAsync(identityUser, userLoginDto.Password))
+			{
+				return GenerateToken(userLoginDto);
+			}
+			return "Incorrect password";
 		}
 
-		public async Task<bool> RegisterUser(UserRegisterDto userRegisterDto)
+		public async Task<string> RegisterUser(UserRegisterDto userRegisterDto)
 		{
 			var identityUser = new IdentityUser
 			{
@@ -56,8 +59,12 @@ namespace TestTaskAPI.Services
 				Email = userRegisterDto.UserName
 			};
 
-			var result = await _userManager.CreateAsync(identityUser,userRegisterDto.Password);
-			return result.Succeeded;
+			var result = await _userManager.CreateAsync(identityUser, userRegisterDto.Password);
+			if (result.Succeeded)
+			{
+				return GenerateToken(userRegisterDto);
+			}
+			return "Error creating user";
 		}
 	}
 }

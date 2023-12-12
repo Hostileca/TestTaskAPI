@@ -5,7 +5,7 @@ namespace TestTaskAPI.Services
 	public interface IAuthService
 	{
 		public string GenerateToken(UserRegisterDto userRegisterDto);
-		public Task<bool> RegisterUser(UserRegisterDto userRegisterDto);
-		public Task<bool> Login(UserRegisterDto userLoginDto);
+		public Task<string> RegisterUser(UserRegisterDto userRegisterDto);
+		public Task<string> Login(UserRegisterDto userLoginDto);
 	}
 }
