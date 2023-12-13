@@ -9,10 +9,10 @@ using TestTaskAPI.Data;
 
 #nullable disable
 
-namespace TestTaskAPI.Migrations
+namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231211171007_InitialCreate")]
+    [Migration("20231213183030_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

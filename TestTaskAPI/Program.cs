@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -54,8 +53,6 @@ namespace TestTaskAPI
 					ValidateIssuerSigningKey = true
 				};
 			});
-
-			//builder.Services.AddAuthorization(options =>options.DefaultPolicy)
 
 			builder.Services.AddControllers();
 			builder.Services.AddEndpointsApiExplorer();

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using TestTaskAPI.Data;
 using TestTaskAPI.Dtos;
-using TestTaskAPI.Dtos.User;
 using TestTaskAPI.Models;
 
 namespace TestTaskAPI.Services
@@ -36,7 +34,7 @@ namespace TestTaskAPI.Services
 		public async Task<Response<EventReadDto>> DeleteEvent(int id)
 		{
 			var eventModelFromRepo = await _eventRepo.GetItemById(id);
-			if (eventModelFromRepo == null)
+			if (eventModelFromRepo is null)
 			{
 				return new Response<EventReadDto>($"Event not found with id:{id}");
 			}

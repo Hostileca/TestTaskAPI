@@ -38,7 +38,8 @@ namespace TestTaskAPI.Data
 		{
 			return await _context.Events.Include(e=>e.Speakers)
 										.Include(e=>e.Organizers)
-										.Include(e=>e.EventStages).ToListAsync();
+										.Include(e=>e.EventStages)
+										.ToListAsync();
 		}
 	}
 }

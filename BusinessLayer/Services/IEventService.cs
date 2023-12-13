@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TestTaskAPI.Dtos;
-using TestTaskAPI.Models;
+﻿using TestTaskAPI.Dtos;
 
 namespace TestTaskAPI.Services
 {

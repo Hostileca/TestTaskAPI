@@ -1,6 +1,4 @@
-﻿using TestTaskAPI.Models;
-
-namespace TestTaskAPI.Data
+﻿namespace TestTaskAPI.Data
 {
 	public interface IRepo<T>
 	{

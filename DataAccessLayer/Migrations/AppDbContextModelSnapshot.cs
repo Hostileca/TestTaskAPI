@@ -8,7 +8,7 @@ using TestTaskAPI.Data;
 
 #nullable disable
 
-namespace TestTaskAPI.Migrations
+namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
